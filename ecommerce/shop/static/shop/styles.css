@@ -1,0 +1,110 @@
+/* Style pour la zone de message */
+.message-container {
+    background-color: #00796B;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.message-container .message {
+    margin: 10px 0;
+}
+
+
+/* Style pour le conteneur principal */
+.form-container {
+    background-color: skyblue;
+    color: white;
+    padding: 2rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+/* Style du titre du formulaire */
+.form-container h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 1.5rem;
+}
+
+/* Style des champs de saisie */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container input[type="date"],
+.form-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Style du bouton de soumission */
+.form-container button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #00796B;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.form-container button[type="submit"]:hover {
+    background-color: #004D40;
+}
+
+/* Style des messages d'erreur */
+.form-container .errorlist {
+    color: #FFCDD2;
+    margin-bottom: 10px;
+}
+
+.form-container .errorlist li {
+    list-style-type: none;
+}
+
+/* Suppression des marges et des espacements par défaut */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Le wrapper prend toute la hauteur de la page */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 100% de la hauteur de la fenêtre */
+}
+
+/* Le contenu principal prend tout l'espace disponible */
+main {
+    flex-grow: 1; /* Cela pousse le footer vers le bas */
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+

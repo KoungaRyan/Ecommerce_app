@@ -1,0 +1,122 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="text-center">Liste de vos Produits</h3>
+        <table class="table table-striped table-hover table-bordered ">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Prix Total</th>
+                </tr>
+            </thead>
+            <tbody id="item-table">
+                <!-- Les produits seront insérés ici dynamiquement -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="1"><strong>Total</strong></td>
+                    <td id="total-quantity"></td> <!-- Quantité totale -->
+                    <td></td> <!-- Colonne vide pour le prix unitaire -->
+                    <td id="total-price"></td> <!-- Prix total -->
+                </tr>
+            </tfoot>
+            
+        </table>        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12  shadow p-4 mb-4 bg-white rounded">
+        <form method="post">
+            {% csrf_token %}
+            <h3 class="text-center">Envoyer la Commande</h3>
+            <input type="hidden" id="items" name="items">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nom">Nom</label>
+                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="hekima@gmail.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" class="form-control" placeholder="Ex: 1234 Main St">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="ville">Ville</label>
+                    <input type="text" name="ville" id="ville" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="pays">Pays</label>
+                    <select id="pays" name="pays" class="form-control">
+                        <option selected>Cameroun</option>
+                        <option>France</option>
+                        <option>Canada</option>
+                        <option>USA</option>
+                        <option>China</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="zipcode">Zip</label>
+                    <input name="zipcode" id="zipcode" type="text" class="form-control">
+                </div >
+                <div  class="form-group col-md-2">
+                    <label for="total">Total à payer</label>
+                    <input name="total" id="total" type="readonly" class="badge-primary form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Commander</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Charger le panier depuis le localStorage ou initialiser un panier vide
+        var panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : {};
+        document.getElementById("panier").innerHTML = "Panier(" + Object.keys(panier).length + ")";
+    
+        var total = 0; // Total général
+        var quantiteTotale = 0; // Quantité totale
+    
+        // Parcourir les éléments du panier
+        for (let item in panier) {
+            let quantite = panier[item][0];
+            let nom = panier[item][1];
+            let prixUnitaire = panier[item][2];
+            let prixTotal = quantite * prixUnitaire;
+    
+            quantiteTotale += quantite;
+            total += prixTotal;
+    
+            // Ajouter une ligne au tableau
+            let row = `
+                <tr>
+                    <td>${nom}</td>
+                    <td>${quantite}</td>
+                    <td>${prixUnitaire.toFixed(2)} $</td>
+                    <td>${prixTotal.toFixed(2)} $</td>
+                </tr>
+            `;
+            document.querySelector("#item-table").innerHTML += row;
+        }
+    
+        // Afficher les totaux dans le pied de tableau
+        document.querySelector("#total-quantity").innerText = quantiteTotale;
+        document.querySelector("#total-price").innerText = `${total.toFixed(2)} $`;
+    
+        // Stocker les données du panier pour la soumission
+        document.querySelector("#items").value = JSON.stringify(panier);
+        document.querySelector("#total").value = `${total.toFixed(2)} $`;
+    });
+    
+</script>
+{% endblock %}

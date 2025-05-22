@@ -1,0 +1,128 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="card card-sm">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col">
+                    <input type="search" placeholder="Entrez le nom du produit que vous cherchez" name="item-name" class="form-control form-control-borderless">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Recherche</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> 
+
+<div class="row" >
+    {% for product in product_object %}
+    <div class="col-md-3 mb-3 me-3 d-flex">
+        <div class="card" style="width: 100%; height: 100%;  display: flex; flex-direction: column;">
+            <img src="{{ product.image }}" alt="product-image" class="card-img-top" style="height: 200px; object-fit: none;">
+            <div class="card-body" style="flex-grow: 1;">
+                <div id="aa{{ product.id }}" class="card-title">{{ product.title }}</div>
+                <div id="price{{ product.id }}" style="color: orange;" class="card-text"><span>$</span>{{ product.price }}</div>
+                <a href="{{ product.id }}" class="btn btn-warning mt-auto">Voire</a>
+                <button id="{{ product.id }}" class="btn ted btn-success mt-auto">Ajouter</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-3 offset-md-4">
+        <ul class="pagination">
+            {% if product_object.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ product_object.previous_page_number }}">Precedent</a>
+                </li>
+            {% endif %} 
+            
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ product_object.number }}">{{ product_object.number }}</a>
+                </li>
+            
+            {% if product_object.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ product_object.next_page_number }}">Suivant</a>
+                </li>
+        {% endif %} 
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('Initialisation du panier');
+        
+        // Charger le panier depuis le localStorage ou initialiser un nouveau panier
+        var panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : {};
+        document.getElementById("panier").innerHTML = "Panier(" + Object.keys(panier).length + ")";
+    
+        // Gestion du clic sur le bouton "Ajouter"
+        $(document).on('click', '.ted', function () {
+            console.log("Ajouter au panier");
+            var item_id = this.id.toString(); // ID du produit
+            console.log(item_id);
+    
+            // Récupération du prix depuis l'élément DOM
+            var priceElement = document.getElementById('price' + item_id);
+            if (priceElement) {
+                var prix = parseFloat(priceElement.textContent.replace('$', '').trim());
+            } else {
+                console.error(`Le prix pour l'article avec ID ${item_id} est introuvable.`);
+                return; // Ne pas continuer si le prix est invalide
+            }
+    
+            // Vérifiez si l'article est déjà dans le panier
+            if (panier[item_id] !== undefined) {
+                var quantite = panier[item_id][0] + 1; // Augmente la quantité
+                panier[item_id][0] = quantite;
+                panier[item_id][2] += prix; // Ajoute le prix au total
+            } else {
+                var quantite = 1;
+                var nom = document.getElementById("aa" + item_id).textContent;
+                panier[item_id] = [quantite, nom, prix]; // Ajoute un nouvel article
+            }
+    
+            // Sauvegarder le panier dans le localStorage
+            console.log(panier);
+            localStorage.setItem('panier', JSON.stringify(panier));
+    
+            // Mettre à jour l'indicateur du panier
+            document.getElementById("panier").innerHTML = "Panier(" + Object.keys(panier).length + ")";
+            AfficherList(panier);
+        });
+    
+        // Afficher la liste des articles dans le panier
+        function AfficherList(panier) {
+            var panierString = "<h5>Voici votre liste</h5>";
+            var index = 1;
+            for (var x in panier) {
+                var productElement = document.getElementById("aa" + x);
+                if (productElement) {
+                    panierString += index + ". " + productElement.textContent + " Qte: " + panier[x][0] + "<br>";
+                    index += 1;
+                }
+            }
+            panierString += "<a href='/checkout' class='btn btn-primary'>Checkout</a>";
+            $('[data-toggle="popover"]').popover();
+            document.getElementById('panier').setAttribute('data-content', panierString);
+        }
+    
+        // Afficher la liste au chargement
+        AfficherList(panier);
+    });
+    
+</script>
+
+{% endblock %}

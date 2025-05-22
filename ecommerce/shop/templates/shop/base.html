@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hekima shop</title>
+	 {% load static %}
+    <link rel="stylesheet" href="{% static 'shop/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand " href="">Hekima-Project</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                      <ul class="navbar-nav">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="{% url 'home'%}">Acceuil <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <button id="panier" type="button" class="btn btn-primary" data-html="true" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+  Panier(0)
+</button>
+                        </li>
+						<li>
+							<a class="nav-link" href="{% url 'register' %}">Crée un Compte </a>
+						</li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Montre</a>
+                            <a class="dropdown-item" href="#">sac</a>
+                            <a class="dropdown-item" href="#">Lap top</a>
+                            <a class="dropdown-item" href="#">Home Appliances</a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+            </div>
+        </div>
+        
+        {% block content %}{% endblock %}
+    </div>
+	<footer id="footer" style="background-color: darkslategray; color: white;">
+		<!-- top footer -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-3 col-xs-6">
+						<div class="footer">
+							<h3 class="footer-title">About Us</h3>
+							<p>This is an E-commerce shop on which you can order and pay quality Goods at afordable prices and get deliver on time.</p>
+						</div>
+					</div>
+	
+					<div class="col-md-3 col-xs-6">
+						<div class="footer">
+							<h3 class="footer-title">Categories</h3>
+							<ul class="footer-links">
+								<li><a href="#">Sac </a></li>
+								<li><a href="#">Laptops</a></li>
+								<li><a href="#">Smartphones</a></li>
+								<li><a href="#">Montre</a></li>
+							</ul>
+						</div>
+					</div>
+	
+					<div class="clearfix visible-xs"></div>
+	
+					<div class="col-md-3 col-xs-6">
+						<div class="footer">
+							<h3 class="footer-title">Information</h3>
+							<ul class="footer-links">
+								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#"><i class="fa fa-map-marker"></i>Younde - Cameroun</a></li>
+								<li><a href="#"><i class="fa fa-phone"></i>+237 694489917</a></li>
+								<li><a href="#"><i class="fa fa-envelope-o"></i>Hekima@email.com</a></li>									
+								
+							</ul>
+						</div>
+					</div>
+	
+					<div class="col-md-3 col-xs-6">
+						<div class="footer">
+							<h3 class="footer-title">Service</h3>
+							<ul class="footer-links">
+								<li><a href="#">My Account</a></li>
+								<li><a href="#">Help</a></li>
+			  <li><a href="#">Terms & Conditions</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /top footer -->
+	
+		<!-- bottom footer -->
+		<div id="bottom-footer" class="section">
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<span class="copyright">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This website is made <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Hekima.com</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+					</div>
+				</div>
+					<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bottom footer -->
+	</footer>
+</body>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="alert {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% block js %}{% endblock %}
+</html>
